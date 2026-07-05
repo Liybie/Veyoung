@@ -143,8 +143,7 @@ const reviews = [
       card.innerHTML = `
         <div class="tc-ico">${ico}</div>
         <h4>${t.n}</h4>
-        <p>${t.d}</p>
-        <a href="#contact" class="tc-book">Book this &#8594;</a>`;
+        <p>${t.d}</p>`;
       grid.appendChild(card);
     });
     if(window.observeReveal) window.observeReveal(grid.querySelectorAll(".treatment-card"));
