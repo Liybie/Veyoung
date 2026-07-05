@@ -315,14 +315,29 @@ const reviews = [
     nav.classList.toggle("scrolled", window.scrollY > 20);
     backTop.classList.toggle("show", window.scrollY > 500);
   });
-  ham.addEventListener("click", () => {
-    links.classList.toggle("open");
-    ham.classList.toggle("active");
-  });
-  links.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+  const backdrop = document.getElementById("navBackdrop");
+  const isMenuOpen = () => links.classList.contains("open");
+  const openMenu = () => {
+    links.classList.add("open");
+    ham.classList.add("active");
+    backdrop?.classList.add("show");
+    backdrop?.setAttribute("aria-hidden", "false");
+    document.body.classList.add("menu-open");
+    ham.setAttribute("aria-expanded", "true");
+  };
+  const closeMenu = () => {
     links.classList.remove("open");
     ham.classList.remove("active");
-  }));
+    backdrop?.classList.remove("show");
+    backdrop?.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("menu-open");
+    ham.setAttribute("aria-expanded", "false");
+  };
+
+  ham.addEventListener("click", () => { isMenuOpen() ? closeMenu() : openMenu(); });
+  backdrop?.addEventListener("click", closeMenu);
+  links.querySelectorAll("a").forEach(a => a.addEventListener("click", closeMenu));
+  document.addEventListener("keydown", e => { if(e.key === "Escape" && isMenuOpen()) closeMenu(); });
   backTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
 
   document.getElementById("year").textContent = new Date().getFullYear();

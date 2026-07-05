@@ -74,7 +74,8 @@ section{scroll-margin-top:90px}
 .nav-links a:hover{color:var(--gold-deep)}
 .nav-actions{display:flex;align-items:center;gap:.8rem}
 .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:6px}
-.hamburger span{width:24px;height:2px;background:var(--ink);border-radius:2px;transition:.3s}
+.hamburger span{width:24px;height:2px;background:var(--ink);border-radius:2px;transition:transform .3s ease,opacity .3s ease}
+.nav-backdrop{display:none}
 
 /* ===== Hero ===== */
 .hero{position:relative;min-height:88vh;display:flex;align-items:center;overflow:hidden}
@@ -450,11 +451,17 @@ section{scroll-margin-top:90px}
   section{scroll-margin-top:72px}
   .nav-inner{padding:.5rem 1rem}
   .brand-logo{height:48px}
-  .nav-links{position:fixed;top:0;right:-100%;height:100vh;width:80%;max-width:320px;
+  .nav-backdrop{display:block;position:fixed;inset:0;background:rgba(28,24,18,.45);
+    opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease;
+    z-index:98;-webkit-tap-highlight-color:transparent}
+  .nav-backdrop.show{opacity:1;visibility:visible}
+  body.menu-open{overflow:hidden;touch-action:none}
+  .nav-links{position:fixed;top:0;right:0;height:100dvh;width:min(320px,82vw);
     background:#fff;flex-direction:column;padding:5rem 2rem;gap:1.2rem;
-    box-shadow:-10px 0 40px rgba(0,0,0,.15);transition:right .35s ease;z-index:99}
-  .nav-links.open{right:0}
-  .hamburger{display:flex}
+    box-shadow:-10px 0 40px rgba(0,0,0,.15);transform:translateX(100%);
+    transition:transform .35s cubic-bezier(.4,0,.2,1);z-index:99;will-change:transform}
+  .nav-links.open{transform:translateX(0)}
+  .hamburger{display:flex;position:relative;z-index:101}
   .hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
   .hamburger.active span:nth-child(2){opacity:0}
   .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
